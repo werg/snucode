@@ -25,7 +25,7 @@ class exports.SCTextView extends Backbone.View
 		# are at the end of the old line
 		line = 0
 		# check whether next line is 
-		while @lineIndex[line+1]? and @lineIndex[line+1] < index
+		while @lineIndex[line+1]? and @lineIndex[line+1] <= index
 			line += 1
 
 		{'line': line, ch: index - @lineIndex[line]}
@@ -40,13 +40,14 @@ class exports.SCTextView extends Backbone.View
 		@adjustLI pos.line, 1
 		@cm.replaceRange c.get('value'), pos, pos, options
 
-	removeChar: (c) =>
-		index = @model.indexOf c
+	removeChar: (c, options) =>
+		cmodel = @model.get c
+		index = @model.indexOf cmodel
 		pos = @index2pos index
 		line1 = pos.line
 		ch1 = pos.ch+1
 
-		if c.get('value') is '\n'
+		if cmodel.get('value') is '\n'
 			@lineIndex.splice pos.line+1, 1
 			line1 += 1
 			ch1 = 0
@@ -86,7 +87,7 @@ class exports.SCTextView extends Backbone.View
 	adjustLI: (index, amount) =>
 		# adjust starting with the next index
 		# so indexes increase after changed line
-		unless index+1 >= @lineIndex.length
-			@lineIndex[index+1] = @lineIndex[index]
+		#if index+1 >= @lineIndex.length
+		#	@lineIndex[index+1] = @lineIndex[index]
 		for line in [index+1 ... @lineIndex.length]
 			@lineIndex[line] += amount

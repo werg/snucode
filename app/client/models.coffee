@@ -50,7 +50,9 @@ class exports.SCText extends Backbone.Collection
 		if change.socket_id isnt C.app.socket_id
 			for r in change.removeCharIDs
 				@view.removeChar r, {silent: true}
+				@remove r
 
+			change.removeCharIDs = []
 			@storeChange change, options
 			# change.addCharModels gets added in above function call
 			for a in change.addCharModels
