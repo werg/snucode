@@ -1,6 +1,6 @@
 genCharID = (c, serverTS) ->
 	randid = Math.random().toString(36).substring(7)
-	return [serverTS, SS.client.app.user_id, randid, c].join ':'
+	return [serverTS, SS.client.app.user_id, randid, c].join(':')
 
 class exports.Char extends Backbone.Model
 	initialize: ->
@@ -11,6 +11,11 @@ class exports.SCText extends Backbone.Collection
 	initialize: (models, options) ->
 		@textChanged = true
 		@id = options.id
+		@authors = []
+		for id, color of options.authors
+			@addAuthor
+				'user_id': id
+				'color': color
 		@view = new C.views.SCTextView {model: this}
 
 
@@ -28,6 +33,11 @@ class exports.SCText extends Backbone.Collection
 		if @textChanged
 			@calcText()
 		return @text
+
+	addAuthor: (author) =>
+		unless author.user_id in @authors
+			@authors.push author.user_id
+			@view.addAuthor author
 
 	storeChange: (change, options) =>
 		# in: a list of id's in change.removeCharIDs
@@ -66,7 +76,7 @@ class exports.SCText extends Backbone.Collection
 		change.removeCharModels = @models.slice(fi, ti)
 
 		wholetext = change.text.join '\n'
-		l = wholetext.length
+		l = wholetext.length + 1  #(plus one for jitter)
 
 		start = if fi > 0
 				@at(fi-1).get 'place'
@@ -78,8 +88,8 @@ class exports.SCText extends Backbone.Collection
 		else
 			1.0
 
-		placeinc = 0.1 * (end - start) / l
-		place = start + 0.5 * placeinc
+		placeinc = 0.08 * (end - start) / l
+		place = start + 0.5 * placeinc + Math.random() * placeinc 
 		change.addChars = []
 
 		for c in wholetext
@@ -87,6 +97,7 @@ class exports.SCText extends Backbone.Collection
 				'id': genCharID c, change.timestamp # todo add now
 				'place': place
 				'value': c
+				'author': C.app.user_id
 			change.addChars.push cobj
 			place += placeinc
 

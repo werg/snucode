@@ -5,3 +5,41 @@ html(lang="en")
     meta(charset="utf-8")
     title snucode
   body
+    #content
+    #footer
+      | &nbsp;Syntax:&nbsp;
+      select#modes
+      | &nbsp;&nbsp;Theme:&nbsp; 
+      select#themes    
+        option(selected, value='default')
+          | default
+        option(value='night')
+          | night
+        option(value='monokai')
+          | monokai
+        option(value='neat')
+          | neat
+        option(value='elegant')
+          | elegant
+        option(value='cobalt')
+          | cobalt
+        option(value='eclipse')
+          | eclipse
+    p#message
+      | Welcome to snucode, a simple collaborative realtime
+      | editor with syntax highlighting!
+      br
+      | This application was built using Node.js
+      | and the realtime framework 
+      a(href="https://github.com/socketstream/socketstream")
+        | SocketStream.
+      | You can get the code on
+      a(href="https://github.com/werg/snucode")
+        | github
+      | or follow me on twitter:
+      a(href="http://twitter.com/werg")
+        | &#64;werg.
+      br
+      | This is a minimal release, further features 
+      | are planed once I figure out how people use
+      | this. Please let me know if there's features you'd like to see.

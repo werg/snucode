@@ -1,6 +1,6 @@
 # todo: set the template
 
-class exports.LoginDia extends Backbone.View
+class exports.LoginDiag extends Backbone.View
 	# color chooser
 	# username
 	initialize: ->
