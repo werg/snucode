@@ -27,7 +27,7 @@ And head to [0.0.0.0:3000](http://0.0.0.0:3000).
 
 ## Operational Transformation
 
-I chose a rather simplifying and (to my mind elegant) approach to operational transformation (i.e. making sure that concurrent edits get integrated at the right place in the document). You can read up on it at my [weblog](http://gpickard.wordpress.com/2012/02/14/my-approach-to-operational-transformation/).
+I chose a rather simplifying and (to my mind elegant) approach to operational transformation (i.e. making sure that concurrent edits get integrated at the right place in the document). You can read up on it at my [weblog](http://gpickard.wordpress.com/2012/02/17/my-approach-to-operational-transformation/).
 
 ## License
 
