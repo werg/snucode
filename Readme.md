@@ -13,9 +13,17 @@ snucode uses the Node.js websockets framework [SocketStream](https://github.com/
 * Arbitrarily many authors can **edit** the same file **simultaneously**.
 * All  **syntax-highlighting** modes [CodeMirror](http://codemirror.net/) provides are supported,
 * as well as most of the **visual themes**. 
-* Contributions by different authors are **identified by color-coded underlining**.
+* **Author attribution** is done by decorating text with color-coded underlining.
 
 For bugs or feature requests please either send me a [tweet](http://twitter.com/werg) or raise an issue on [github](https://github.com/werg/snucode/issues).
+
+## Install
+
+To roll your own copy, install Node.js and SocketStream [at version 0.2](https://github.com/socketstream/socketstream/tree/0.2) (which currently still should be default version available on npm).
+To test it simply run
+    socketstream start
+
+And head to [0.0.0.0:3000](http://0.0.0.0:3000).
 
 ## Operational Transformation
 
