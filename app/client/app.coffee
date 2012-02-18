@@ -38,15 +38,15 @@ generateColor = ->
 #	return '#' + colors.join ''
 
 showOptions = ->
-	$('#showoptions').slideUp()
-	$('#options').slideDown()
-	$('#message').slideDown()
+	$('#showoptions').filter(':visible').slideUp()
+	$('#options').not(':visible').slideDown()
+	$('#message').not(':visible').slideDown()
 	false
 
 hideOptions = ->
-	$('#showoptions').slideDown()
-	$('#options').fadeOut()
-	$('#message').fadeOut()
+	$('#showoptions').not(':visible').slideDown()
+	$('#options').filter(':visible').fadeOut()
+	$('#message').filter(':visible').fadeOut()
 	#$('#solink').click showOptions
 	false
 
@@ -85,11 +85,13 @@ exports.init = ->
 
 		runSync = ->
 			syncClock 5, -> console.log 'synced clock'
-		setInterval runSync, 1000000
+		setInterval runSync, 10000000
 		runSync()
 	
 	for mode in C.views.availableModes
 		$('#modes').append '<option value="' + mode + '"> ' + mode + '</option>'
+	
+	setTimeout hideOptions, 100000
 	
 
 
