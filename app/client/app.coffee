@@ -37,10 +37,25 @@ generateColor = ->
 #		(63 + c).toString(16).substring 0, 2
 #	return '#' + colors.join ''
 
+showOptions = ->
+	$('#showoptions').slideUp()
+	$('#options').slideDown()
+	$('#message').slideDown()
+	false
+
+hideOptions = ->
+	$('#showoptions').slideDown()
+	$('#options').fadeOut()
+	$('#message').fadeOut()
+	#$('#solink').click showOptions
+	false
+
 
 # This method is called automatically when the websocket connection is established.
 exports.init = ->
 	window.C = SS.client
+	$('#solink').click showOptions
+	$('#holink').click hideOptions
 	syncClock 1, ->	
 		C.app.socket_id = SS.socket.socket.sessionid
 		SS.server.app.getAuthor (author) ->

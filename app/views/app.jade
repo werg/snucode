@@ -7,24 +7,32 @@ html(lang="en")
   body
     #content
     #footer
-      | &nbsp;Syntax:&nbsp;
-      select#modes
-      | &nbsp;&nbsp;Theme:&nbsp; 
-      select#themes    
-        option(selected, value='default')
-          | default
-        option(value='night')
-          | night
-        option(value='monokai')
-          | monokai
-        option(value='neat')
-          | neat
-        option(value='elegant')
-          | elegant
-        option(value='cobalt')
-          | cobalt
-        option(value='eclipse')
-          | eclipse
+      #showoptions.b(style='display:none')
+        a#solink(href='#')
+          | Options
+      #options
+        | &nbsp;Syntax:&nbsp;
+        select#modes
+        | &nbsp;&nbsp;Theme:&nbsp; 
+        select#themes    
+          option(selected, value='default')
+            | default
+          option(value='night')
+            | night
+          option(value='monokai')
+            | monokai
+          option(value='neat')
+            | neat
+          option(value='elegant')
+            | elegant
+          option(value='cobalt')
+            | cobalt
+          option(value='eclipse')
+            | eclipse
+        span#hideoptions.b
+          &nbsp;&nbsp;
+          a#holink(href='#')
+            | Hide Options
     p#message
       | Welcome to snucode, a simple collaborative realtime
       | editor with syntax highlighting!
