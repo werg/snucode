@@ -3,9 +3,6 @@
 textID2RedisKey = (id) ->
 	"snucode:doc:" + id
 
-user2ColorKey = (user_id) ->
-	'snucode:author:color:' + user_id
-
 createDocID = (cb) ->
 	id = Math.random().toString(36).substring(7)
 	R.exists textID2RedisKey(id), (err, exists) ->
@@ -87,6 +84,12 @@ exports.actions =
 		#@session.channel.unsubscribeAll()
 		@session.channel.subscribe(id)
 		docID = textID2RedisKey(id)
+
+		# delete document after two weeks
+		R.expire docID, 1209600
+		R.expire docID + ':authors', 1209600
+
+		# retrieve doc
 		R.zrange docID, 0,-1,"withscores", (err, pchars) ->
 			chars = []
 			while pchars.length > 0

@@ -18,6 +18,7 @@ snucode uses the Node.js websockets framework [SocketStream](https://github.com/
 * Tries to **guess filetype** from file extension or MIME type.
 * **Line Wrapping** optional.
 * **Save files** to disk using Douglas Neiner's [Downloadify](https://github.com/dcneiner/Downloadify) (uses Flash since there's no reliable HTML 5 solution).
+* **Documents expire** a set amount of time after last access (default two weeks, using Redis expire).
 
 For bugs or feature requests please either send me a [tweet](http://twitter.com/werg) or raise an issue on [github](https://github.com/werg/snucode/issues).
 
