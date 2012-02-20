@@ -65,6 +65,7 @@ exports.actions =
 		if @session.attributes.author?
 			cb @session.attributes.author
 		else
+			R.incr 'snucode:stats:total:authors'
 			cb false
 
 	setColor: (textID, cb) ->
@@ -79,6 +80,7 @@ exports.actions =
 
 	newDocID: (cb) ->
 		createDocID cb
+		R.incr 'snucode:stats:total:docs'
 
 	loadDoc: (id, cb) ->
 		#@session.channel.unsubscribeAll()
@@ -88,6 +90,7 @@ exports.actions =
 		# delete document after two weeks
 		R.expire docID, 1209600
 		R.expire docID + ':authors', 1209600
+		R.incr 'snucode:stats:total:loads'
 
 		# retrieve doc
 		R.zrange docID, 0,-1,"withscores", (err, pchars) ->
