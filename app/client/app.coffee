@@ -91,16 +91,18 @@ exports.init = ->
 					text = event.target.result
 					C.app.text.view.cm.setValue text
 
-					if file.type isnt ''
+					parts = file.name.split '.'
+					extension = parts[parts.length-1]
+					langname = SS.shared.util.fileExts[extension]
+					if langname?
+						$('#modes').val(langname)
+						$('#modes').change()
+					else if file.type isnt ''
 						for m in CodeMirror.listMIMEs()
 							if m.mime is file.type
 								$('#modes').val(m.mode.name)
-					else 
-						parts = file.name.split '.'
-						extension = parts[parts.length-1]
-						langname = SS.shared.util.fileExts[extension]
-						if langname?
-							$('#modes').val(langname)
+								$('#modes').change()
+
 												
 				reader.readAsText file
 
