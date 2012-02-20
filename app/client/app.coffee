@@ -71,12 +71,12 @@ exports.init = ->
 		C.app.route = new C.app.Router()
 		unless Backbone.history.start {pushState: true}
 			SS.server.app.newDocID (docid) ->
-				C.app.route.navigate "doc/" + docid, true
+				C.app.route.navigate "doc/" + docid, {trigger:true, replace:true}
 
 		$('#modes').change ->
 			mode = $('#modes').val()
 			#C.app.text.view.setMode mode
-			C.app.route.navigate 'doc/' + C.app.text.id + '?mode=' + mode, {trigger:true}
+			C.app.route.navigate 'doc/' + C.app.text.id + '?mode=' + mode, {trigger:true, replace:true}
 
 		$('#themes').change ->
 			colors = $('#themes').val()
@@ -159,7 +159,7 @@ class exports.Router extends Backbone.Router
 				$('#modes').val lang
 
 	setDoc: (id) =>
-		@navigate 'doc/' + id + '?mode=null', {trigger:true}
+		@loadDoc id
 
 
 
