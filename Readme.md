@@ -14,6 +14,10 @@ snucode uses the Node.js websockets framework [SocketStream](https://github.com/
 * All  **syntax-highlighting** modes [CodeMirror](http://codemirror.net/) provides are supported,
 * as well as most of the **visual themes**. 
 * **Author attribution** is done by decorating text with color-coded underlining.
+* **Open files** from local file system using the HTML 5 [File API](http://www.html5rocks.com/en/tutorials/file/dndfiles/).
+* Tries to **guess filetype** from file extension or MIME type.
+* **Line Wrapping** optional.
+* **Save files** to disk using Douglas Neiner's [Downloadify](https://github.com/dcneiner/Downloadify) (uses Flash since there's no reliable HTML 5 solution).
 
 For bugs or feature requests please either send me a [tweet](http://twitter.com/werg) or raise an issue on [github](https://github.com/werg/snucode/issues).
 
