@@ -89,6 +89,7 @@ exports.init = ->
 				file = this.files[0]
 				reader = new FileReader()
 				reader.onload = (event) ->
+					C.app.filename = file.name
 					# try to determine filetype first:
 					parts = file.name.split '.'
 					extension = parts[parts.length-1]
@@ -112,6 +113,27 @@ exports.init = ->
 
 		else
 			$('#filewrapper').remove()
+
+		Downloadify.create 'downloadify',
+			filename: ->
+				if C.app.filename?
+					return C.app.filename
+				else
+					ext = 'txt'
+					mode = $('#modes').val()
+					if mode isnt 'null'
+						for e,m of SS.shared.util.fileExts
+							if mode is m
+								ext = e
+					return C.app.text.id + '.' + ext
+			data: ->
+				C.app.text.getText()
+			onError: ->
+				alert('You must put something in the File Contents or there will be nothing to save!')
+			swf: '/media/downloadify.swf'
+			downloadImage: '/images/download.png'
+			width: 30
+			height: 10
 
 
 		runSync = ->
