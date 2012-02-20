@@ -2,7 +2,7 @@ exports.availableModes = ["null", "clike", "clojure", "coffeescript", "css", "di
 
 class exports.SCTextView extends Backbone.View
 	initialize: ->
-		@mode = "javascript"
+		@authors = []
 		@calcLineIndex()
 		# todo: bind to change events in model
 		@render()
@@ -25,6 +25,13 @@ class exports.SCTextView extends Backbone.View
 		$('#linewrap').change =>
 			@setLineWrap $('#linewrap').is(':checked')
 			
+		$('#markusers').change =>
+			if $('#markusers').is(':checked')
+				for author in @authors
+					@markUser author
+			else
+				$('.authorstyle').remove()
+			
 
 	setLineWrap: (lineWrap) =>
 		@cm.setOption 'lineWrapping', lineWrap
@@ -35,9 +42,13 @@ class exports.SCTextView extends Backbone.View
 		@theme = theme
 		$('body').addClass 'cm-s-' + @theme
 
-
 	addAuthor: (author) =>
-		style =  "<style type='text/css'> .cm-author-" + author.user_id + "{ border-color: " + author.color + "; border-bottom-style: dotted; border-width: 2px;} </style>"
+		@authors.push author
+		if $('#markusers').is(':checked')
+			@markUser author
+	
+	markUser: (author) =>
+		style =  "<style class='authorstyle' type='text/css'> .cm-author-" + author.user_id + "{ border-color: " + author.color + "; border-bottom-style: dotted; border-width: 2px;} </style>"
 		$(style).appendTo("head")
 
 	setMode: (lang) =>

@@ -159,7 +159,7 @@ class exports.Router extends Backbone.Router
 				$('#modes').val lang
 
 	setDoc: (id) =>
-		@loadDoc id
+		@setMode id, $('#modes').val()
 
 
 
