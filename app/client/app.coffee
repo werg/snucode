@@ -37,17 +37,18 @@ generateColor = ->
 #		(63 + c).toString(16).substring 0, 2
 #	return '#' + colors.join ''
 
-showOptions = ->
-	$('#showoptions').filter(':visible').slideUp()
-	$('#options').not(':visible').slideDown()
-	$('#message').not(':visible').slideDown()
-	false
-
 hideOptions = ->
 	$('#showoptions').not(':visible').slideDown()
 	$('#options').filter(':visible').fadeOut()
 	$('#message').filter(':visible').fadeOut()
 	#$('#solink').click showOptions
+	false
+
+showOptions = ->
+	$('#showoptions').filter(':visible').slideUp()
+	$('#options').not(':visible').slideDown()
+	$('#message').not(':visible').slideDown()
+	setTimeout hideOptions, 80000
 	false
 
 
@@ -118,7 +119,7 @@ exports.init = ->
 	for mode in C.views.availableModes
 		$('#modes').append '<option value="' + mode + '"> ' + mode + '</option>'
 	
-	setTimeout hideOptions, 100000
+	showOptions()
 	
 
 
