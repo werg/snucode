@@ -11,9 +11,13 @@ html(lang="en")
         a#solink(href='#')
           | Options
       #options
-        | &nbsp;Syntax:&nbsp;
+        span#hideoptions.b
+          &nbsp;
+          a#holink(href='#')
+            | Hide Options
+        | &nbsp;&nbsp;&nbsp;Syntax:&nbsp;
         select#modes
-        | &nbsp;&nbsp;Theme:&nbsp; 
+        | &nbsp;&nbsp;&nbsp;&nbsp;Theme:&nbsp; 
         select#themes    
           option(selected, value='default')
             | default
@@ -29,10 +33,11 @@ html(lang="en")
             | cobalt
           option(value='eclipse')
             | eclipse
-        span#hideoptions.b
-          &nbsp;&nbsp;
-          a#holink(href='#')
-            | Hide Options
+        | &nbsp;&nbsp;&nbsp;&nbsp;Wrap lines:&nbsp;
+        input#linewrap(type='checkbox')
+        span#filewrapper
+          | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Open File:&nbsp;
+          input#file(type='file')
     p#message
       | Welcome to snucode, a simple collaborative realtime
       | editor with syntax highlighting!

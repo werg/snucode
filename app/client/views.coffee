@@ -8,6 +8,7 @@ class exports.SCTextView extends Backbone.View
 		@render()
 
 	render: =>
+		lW = $('#linewrap').is(':checked')
 		@theme = $('#themes').val()
 		@cm = CodeMirror document.getElementById('content'), 
 			value: @model.getText()
@@ -16,8 +17,17 @@ class exports.SCTextView extends Backbone.View
 			'onChange': @onChange
 			'smartIndent': false
 			#'theme': 'monokai'
+			'lineWrapping': lW
 
 		@setTheme @theme
+
+		@cm.focus()
+		$('#linewrap').change =>
+			@setLineWrap $('#linewrap').is(':checked')
+			
+
+	setLineWrap: (lineWrap) =>
+		@cm.setOption 'lineWrapping', lineWrap
 
 	setTheme: (theme) =>
 		@cm.setOption 'theme', theme

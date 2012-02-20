@@ -83,6 +83,31 @@ exports.init = ->
 			C.app.text.view.setTheme colors
 			# todo set session preference
 
+		if window.File and window.FileReader
+			$('#file').change (event) ->
+				file = this.files[0]
+				reader = new FileReader()
+				reader.onload = (event) ->
+					text = event.target.result
+					C.app.text.view.cm.setValue text
+
+					if file.type isnt ''
+						for m in CodeMirror.listMIMEs()
+							if m.mime is file.type
+								$('#modes').val(m.mode.name)
+					else 
+						parts = file.name.split '.'
+						extension = parts[parts.length-1]
+						langname = SS.shared.util.fileExts[extension]
+						if langname?
+							$('#modes').val(langname)
+												
+				reader.readAsText file
+
+		else
+			$('#filewrapper').remove()
+
+
 		runSync = ->
 			syncClock 5, -> console.log 'synced clock'
 		setInterval runSync, 10000000
