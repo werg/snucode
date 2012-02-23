@@ -58,15 +58,15 @@ class exports.SCText extends Backbone.Collection
 		
 	theirChange: (change, options) =>
 		if change.socket_id isnt C.app.socket_id
-			for r in change.removeCharIDs
-				@view.removeChar r, {silent: true}
-				@remove r
+			@view.removeChars change.removeCharIDs, {silent: true}
+			@remove change.removeCharIDs, options
+			#for r in change.removeCharIDs
+			#	@remove r
 
 			change.removeCharIDs = []
 			@storeChange change, options
 			# change.addCharModels gets added in above function call
-			for a in change.addCharModels
-				@view.insertChar a, {silent: true}
+			@view.insertChars change.addCharModels, {silent: true}
 
 	myChange: (change, options) =>
 		# todo a queue system?

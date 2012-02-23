@@ -129,7 +129,48 @@ class exports.SCTextView extends Backbone.View
 		@adjustLI pos.line, 1
 		@cm.replaceRange c.get('value'), pos, pos, options
 
+	insertChars: (chars, options) =>
+		if chars.length > 0
+			#sorted = _.sortBy chars, (c) ->
+			#	c.get 'place'
+			# assume sorting
+			sorted = chars
+
+			initIndex = @model.indexOf sorted[0]
+			lastIndex = @model.indexOf sorted[sorted.length-1]
+			pos = @index2pos initIndex
+
+			if lastIndex + 1 - initIndex is sorted.length
+				text = _.map sorted, (c) ->
+					c.get 'value'
+				
+				@calcLineIndex()
+				@cm.replaceRange text.join(''), pos, pos, options
+				#addI = 0
+				#line = pos.line
+				#for  t, i in text
+				#	if t is '\n'
+				#		@lineIndex.splice line + 1, 0, initIndex + i
+			else
+				for c in chars
+					@insertChar c
+
+	removeChars: (charIDs, options) =>
+		l = charIDs.length
+		if l > 0
+			# here we assume sorting again
+			initIndex = @model.indexOf @model.get charIDs[0]
+			lastIndex = @model.indexOf @model.get charIDs[l-1]
+
+			if  lastIndex + 1 - initIndex is l
+				pos = @index2pos initIndex
+				pos1 = @index2pos lastIndex
+				pos1.ch += 1
+
+				@cm.replaceRange '', pos, pos1, options
+
 	removeChar: (c, options) =>
+
 		cmodel = @model.get c
 		index = @model.indexOf cmodel
 		pos = @index2pos index

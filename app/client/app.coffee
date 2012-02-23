@@ -17,8 +17,10 @@ syncClock = (sampleSize, cb) ->
 	
 	_sc(0, sampleSize)
 
+generateUserId = ->
+	Math.random().toString(36).substring(7)
 
-exports.user_id = Math.random().toString(36).substring(7)
+#exports.user_id = Math.random().toString(36).substring(7)
 
 generateColor = ->
 	rn = Math.random() * 73
@@ -51,6 +53,24 @@ showOptions = ->
 	setTimeout hideOptions, 80000
 	false
 
+setAuthor = ->
+	SS.server.app.setAuthor
+		'user_id': C.app.user_id
+		'color':   C.app.user_color
+
+handleUserAuth = ->
+	C.app.socket_id = SS.socket.socket.sessionid
+	if C.app.user_id? and C.app.user_color?
+		setAuthor()
+	else
+		SS.server.app.getAuthor (author) ->
+			if author
+				C.app.user_id = author.user_id
+			else
+				C.app.user_color = generateColor()
+				C.app.user_id = generateUserId()
+				setAuthor()
+
 
 # This method is called automatically when the websocket connection is established.
 exports.init = ->
@@ -58,15 +78,8 @@ exports.init = ->
 	$('#solink').click showOptions
 	$('#holink').click hideOptions
 	syncClock 1, ->	
-		C.app.socket_id = SS.socket.socket.sessionid
-		SS.server.app.getAuthor (author) ->
-			if author
-				C.app.user_id = author.user_id
-			else
-				SS.server.app.setAuthor
-					'user_id': C.app.user_id
-					'color':   generateColor()
-				# new C.modals.LoginDiag()
+		handleUserAuth()
+		SS.socket.on 'connect', handleUserAuth
 
 		C.app.route = new C.app.Router()
 		unless Backbone.history.start {pushState: true}
