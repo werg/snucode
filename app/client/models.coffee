@@ -6,7 +6,6 @@ class exports.Char extends Backbone.Model
 	initialize: ->
 
 
-
 class exports.SCText extends Backbone.Collection
 	initialize: (models, options) ->
 		@textChanged = true
@@ -77,6 +76,12 @@ class exports.SCText extends Backbone.Collection
 
 		wholetext = change.text.join '\n'
 		l = wholetext.length + 1  #(plus one for jitter)
+
+		l1 = ti - fi
+
+		if l > 1200 or l1 > 1200
+			alert "Unfortunately, snucode cannot yet handle inserting or removing that much text - we get all sorts of nasty behavior!"
+			window.location.reload()
 
 		start = if fi > 0
 				@at(fi-1).get 'place'
